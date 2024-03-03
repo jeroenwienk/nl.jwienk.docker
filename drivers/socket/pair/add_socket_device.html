@@ -1,0 +1,194 @@
+<div style="display: flex; flex-direction: column; height: 100%">
+  <form
+    id="connection"
+    class="homey-form"
+    style="display: flex; flex-direction: column; flex: 1; overflow-y: auto"
+  >
+    <div class="homey-form-group" style="margin: 0">
+      <label class="homey-form-label" for="host">Host</label>
+      <input
+        class="homey-form-input"
+        type="text"
+        name="host"
+        id="host"
+        placeholder="192.168.178.123"
+        required
+      />
+    </div>
+
+    <div class="homey-form-group" style="margin: 0">
+      <label class="homey-form-label" for="port">Port</label>
+      <input
+        class="homey-form-input"
+        type="number"
+        name="port"
+        id="port"
+        placeholder="2376"
+        required
+      />
+    </div>
+
+    <div class="homey-form-group" style="margin: 0">
+      <label class="homey-form-label" for="port">ca.pem</label>
+      <input class="homey-form-input" type="file" name="ca" id="ca" required accept=".pem" />
+    </div>
+
+    <div class="homey-form-group" style="margin: 0">
+      <label class="homey-form-label" for="cert">cert.pem</label>
+      <input class="homey-form-input" type="file" name="cert" id="cert" required accept=".pem" />
+    </div>
+
+    <div class="homey-form-group" style="margin: 0">
+      <label class="homey-form-label" for="key">key.pem</label>
+      <input class="homey-form-input" type="file" name="key" id="key" required accept=".pem" />
+    </div>
+
+    <div class="homey-form-group" style="margin: 0">
+      <label class="homey-form-label" for="unsecured">Pair Unsecured</label>
+      <input class="homey-form-checkbox" type="checkbox" id="unsecured" name="unsecured" />
+    </div>
+
+    <button class="homey-button-secondary-full" name="test">Test Connection</button>
+  </form>
+
+  <nav style="display: flex; flex-direction: row; gap: 8px; flex: 0 0 auto">
+    <button id="connection-previous-button" class="homey-button-transparent" style="flex: 1 1 0">
+      <span class="homey-icon-arrow-left"></span>
+      <span data-i18n="__prev"></span>
+    </button>
+
+    <button
+      class="homey-button-primary"
+      style="flex: 1 1 0"
+      name="submit"
+      form="connection"
+      disabled
+    >
+      Add
+    </button>
+  </nav>
+</div>
+
+<script type="application/javascript">
+  (function run() {
+    async function readFileAsText(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          resolve(event.target.result);
+        };
+
+        reader.onerror = (event) => {
+          reject(event.target.error);
+        };
+
+        reader.readAsText(file);
+      });
+    }
+
+    const unsecuredCheckbox = document.getElementById('unsecured');
+    const tlsFields = document.querySelectorAll('.homey-form-group input[type="file"]');
+
+    function toggleTlsFields() {
+      tlsFields.forEach((field) => {
+        if (unsecuredCheckbox.checked === true) {
+          field.disabled = true;
+        } else {
+          field.disabled = false;
+        }
+      });
+    }
+
+    toggleTlsFields();
+
+    // Add event listener for checkbox changes
+    unsecuredCheckbox.addEventListener('change', toggleTlsFields);
+
+    Homey.setTitle('Socket');
+    Homey.setSubtitle('Add a new socket device.');
+
+    const connectionForm = document.getElementById('connection');
+    const hostInput = document.getElementById('host');
+    const portInput = document.getElementById('port');
+    const submitButton = document.querySelector('button[name="submit"]');
+    const previousButton = document.getElementById('connection-previous-button');
+
+    previousButton.addEventListener('click', () => {
+      Homey.showView('add_socket_device_info');
+    });
+
+    connectionForm.addEventListener('input', (event) => {
+      if (submitButton.disabled === false) {
+        submitButton.disabled = true;
+      }
+    });
+
+    connectionForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      (async () => {
+        const formData = new FormData(connectionForm);
+        const host = formData.get('host');
+        const port = formData.get('port');
+        const caFile = formData.get('ca');
+        const certFile = formData.get('cert');
+        const keyFile = formData.get('key');
+        const unsecured = formData.get('unsecured');
+
+        console.log({ unsecured });
+
+        let ca = undefined;
+        let cert = undefined;
+        let key = undefined;
+
+        if (unsecured !== 'on') {
+          // Check if any of the files are too large.
+          const maxSize = 1024 * 1024;
+
+          function checkSize(file) {
+            if (file.size > maxSize) {
+              throw new Error(`${file.name} is too large.`);
+            }
+          }
+
+          checkSize(caFile);
+          checkSize(certFile);
+          checkSize(keyFile);
+
+          [ca, cert, key] = await Promise.all([
+            readFileAsText(caFile),
+            readFileAsText(certFile),
+            readFileAsText(keyFile),
+          ]);
+        }
+
+        if (event.submitter.name === 'test') {
+          const result = await Homey.emit('test_connection', { host, port, ca, cert, key });
+          Homey.alert(result);
+          submitButton.removeAttribute('disabled');
+
+          return;
+        }
+
+        const id = await Homey.emit('get_id');
+        await Homey.createDevice({
+          name: 'Socket',
+          data: {
+            id,
+          },
+          store: {
+            host,
+            port,
+            ca,
+            cert,
+            key,
+          },
+          settings: {},
+        });
+        Homey.done();
+      })().catch((error) => {
+        Homey.alert(error.toString());
+      });
+    });
+  })();
+</script>

@@ -1,0 +1,81 @@
+{
+  "actions": [
+    {
+      "id": "container_button",
+      "title": {
+        "en": "Press button"
+      },
+      "titleFormatted": {
+        "en": "Press [[button]]"
+      },
+      "args": [
+        {
+          "type": "dropdown",
+          "name": "button",
+          "title": {
+            "en": "Button"
+          },
+          "values": [
+            {
+              "id": "start",
+              "label": {
+                "en": "Start"
+              }
+            },
+            {
+              "id": "stop",
+              "label": {
+                "en": "Stop"
+              }
+            },
+            {
+              "id": "restart",
+              "label": {
+                "en": "Restart"
+              }
+            },
+            {
+              "id": "kill",
+              "label": {
+                "en": "Kill"
+              }
+            },
+            {
+              "id": "pause",
+              "label": {
+                "en": "Pause"
+              }
+            },
+            {
+              "id": "unpause",
+              "label": {
+                "en": "Unpause"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "container_inspect",
+      "title": {
+        "en": "Inspect container"
+      },
+      "titleFormatted": {
+        "en": "Inspect container"
+      },
+      "hint": {
+        "en": "Returns low-level information on the container."
+      },
+      "tokens": [
+        {
+          "name": "response",
+          "type": "string",
+          "title": {
+            "en": "Response"
+          }
+        }
+      ]
+    }
+  ]
+}

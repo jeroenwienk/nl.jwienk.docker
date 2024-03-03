@@ -1,0 +1,30 @@
+<div id="add_container_device"></div>
+
+<script type="text/javascript">
+  (async function run() {
+    const currentView = Homey.getCurrentView();
+    Homey.showLoadingOverlay();
+
+    const containerName = await Homey.getViewStoreValue('add_container_device', 'containerName');
+    const socketId = await Homey.getViewStoreValue('list_container_devices', 'socketId');
+    const id = await Homey.emit('get_id');
+
+    await Homey.createDevice({
+      name: containerName.substring(0, 20),
+      data: {
+        id,
+        name: containerName,
+        socketId,
+      },
+      store: {},
+      settings: {},
+    });
+
+    Homey.hideLoadingOverlay();
+    Homey.done();
+  })().catch((error) => {
+    Homey.hideLoadingOverlay();
+    Homey.setNavigationClose();
+    Homey.alert(error.toString());
+  });
+</script>

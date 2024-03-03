@@ -1,0 +1,14 @@
+{
+  "name": "nl.jwienk.docker",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {},
+  "devDependencies": {
+    "@types/homey": "npm:homey-apps-sdk-v3-types@^0.3.5",
+    "@types/node": "^20.11.24"
+  },
+  "dependencies": {
+    "dockerode": "^4.0.2",
+    "uuid": "^9.0.1"
+  }
+}

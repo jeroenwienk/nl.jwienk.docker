@@ -1,0 +1,269 @@
+<style>
+  .homey-list-devices {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .homey-list-devices-message {
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: center;
+  }
+
+  .homey-list-devices-message:empty {
+    display: none;
+  }
+
+  .homey-list-devices-body {
+    width: 100%;
+  }
+
+  .homey-list-devices-grid {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 16px;
+    margin: var(--homey-su-4) 0 var(--homey-su-4);
+  }
+
+  .homey-list-devices-grid:empty {
+    display: none;
+  }
+
+  .homey-device-tile {
+    display: block;
+    -webkit-user-select: none !important;
+    user-select: none !important;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-drag: none;
+  }
+
+  .homey-device-tile__input {
+    display: none;
+  }
+
+  .homey-device-tile__tile {
+    --device-tile-padding: 7.4%;
+    position: relative;
+    display: block;
+    cursor: pointer;
+    padding-bottom: calc(100% - 4px);
+    border-radius: var(--homey-border-radius);
+    background: var(--homey-color-component);
+    box-shadow: var(--homey-box-shadow);
+    border: 2px solid transparent;
+    transition: 200ms ease-in-out;
+    transition-property: transform, border-color, background-color;
+    will-change: transform, border-color, background-color;
+  }
+
+  .homey-device-tile__tile:active {
+    transform: scale(0.95);
+  }
+
+  .homey-device-tile__input:checked + .homey-device-tile__tile {
+    border-color: var(--homey-color-blue);
+    background: var(--homey-color-blue-o-05);
+    box-shadow: var(--homey-box-shadow-selected);
+  }
+
+  .homey-device-tile__name-scale-wrapper {
+    position: absolute;
+    top: var(--device-tile-padding);
+    right: var(--device-tile-padding);
+    bottom: var(--device-tile-padding);
+    left: var(--device-tile-padding);
+    width: calc(100% - var(--device-tile-padding) * 2);
+    height: calc(100% - var(--device-tile-padding) * 2);
+  }
+
+  .homey-device-tile__name-position-wrapper {
+    display: flex;
+    justify-items: flex-end;
+    width: 92px;
+    height: 92px;
+  }
+
+  .homey-device-tile__name {
+    margin-top: auto;
+    line-height: 1.13;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    font-size: 15px;
+    -webkit-user-select: none !important;
+    user-select: none !important;
+    word-break: break-word;
+    hyphens: auto;
+  }
+
+  .homey-device-tile__icon {
+    position: absolute;
+    display: block;
+    top: var(--device-tile-padding);
+    left: var(--device-tile-padding);
+    flex-shrink: 0;
+    width: 33%;
+    padding-bottom: 33%;
+    background-color: var(--homey-color-mono-80);
+    mask-size: contain;
+  }
+
+  .homey-device-tile__checked {
+    opacity: 0;
+    position: absolute;
+    right: var(--device-tile-padding);
+    top: var(--device-tile-padding);
+    display: block;
+    width: 18.5%;
+    height: 18.5%;
+    background: var(--homey-color-blue);
+    -webkit-mask-size: 100%;
+    mask-size: 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    transition: opacity var(--homey-duration-fast) var(--homey-curve-fast-in);
+  }
+
+  .homey-device-tile__input[type='radio'] + .homey-device-tile__tile .homey-device-tile__checked {
+    -webkit-mask-image: url('/icons/checkmark-circle-fill.svg');
+    mask-image: url('/icons/checkmark-circle-fill.svg');
+  }
+
+  .homey-device-tile__input:checked + .homey-device-tile__tile .homey-device-tile__checked {
+    opacity: 1;
+  }
+</style>
+
+<div class="homey-list-devices" id="list_container_devices">
+  <div id="homey-list-devices-message" class="homey-list-devices-message"></div>
+
+  <div class="homey-list-devices-body">
+    <form id="homey-list-devices-select-devices" class="homey-list-devices-grid"></form>
+  </div>
+
+  <template id="template-select-device">
+    <label data-template-device-label class="homey-device-tile hy-nostyle">
+      <input
+        data-template-device-input
+        type="radio"
+        name="container"
+        class="hy-input-checkbox homey-device-tile__input"
+      />
+      <span class="homey-device-tile__tile">
+        <!-- Icon -->
+        <span data-template-device-icon class="homey-device-tile__icon icon"></span>
+        <!-- Check icon -->
+        <span class="homey-device-tile__checked"></span>
+        <!-- Name -->
+        <svg
+          class="homey-device-tile__name-scale-wrapper"
+          width="100%"
+          height="100%"
+          viewBox="0 0 92 92"
+          preserveAspectRatio="xMinYMin meet"
+        >
+          <foreignObject
+            width="100%"
+            height="100%"
+            x="0"
+            y="0"
+            xmlns="http://www.w3.org/1999/xhtml"
+          >
+            <div
+              class="homey-device-tile__name-position-wrapper"
+              xmlns="http://www.w3.org/1999/xhtml"
+            >
+              <span data-template-device-name class="homey-device-tile__name"></span>
+            </div>
+          </foreignObject>
+        </svg>
+      </span>
+    </label>
+  </template>
+</div>
+
+<script type="text/javascript">
+  (function run() {
+    const currentView = Homey.getCurrentView();
+    const $root = document.getElementById('list_container_devices');
+
+    const $message = $root.querySelector('#homey-list-devices-message');
+    const $containers = $root.querySelector('#homey-list-devices-select-devices');
+    const template = $root.querySelector('#template-select-device');
+
+    Homey.setTitle('Containers');
+    Homey.setSubtitle('Select the container you want to add.');
+    Homey.showLoadingOverlay();
+
+    (async function renderContainers() {
+      const socketId = await Homey.getViewStoreValue('list_container_devices', 'socketId');
+      const result = await Homey.emit('get_containers', { socketId });
+      const containers = Object.values(result);
+      Homey.hideLoadingOverlay();
+
+      if (containers.length === 0) {
+        $message.textContent = 'No containers found.';
+        Homey.setNavigationClose();
+        return;
+      }
+
+      for (const [index, container] of containers.entries()) {
+        renderContainer(container, index, containers);
+      }
+
+      const formData = new FormData($containers);
+      const containerName = formData.get('container');
+      Homey.setViewStoreValue('add_container_device', 'containerName', containerName)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch(console.error);
+    })().catch((error) => {
+      Homey.hideLoadingOverlay();
+      $message.textContent = error.toString();
+      Homey.setNavigationClose();
+    });
+
+    function renderContainer(container, index, containers) {
+      const $element = template.content.cloneNode(true);
+
+      const $label = $element.querySelector('[data-template-device-label]');
+      const $input = $element.querySelector('[data-template-device-input]');
+      const $name = $element.querySelector('[data-template-device-name]');
+      const $icon = $element.querySelector('[data-template-device-icon]');
+
+      $input.value = container.name;
+      $input.addEventListener('change', (event) => {
+        const formData = new FormData($containers);
+        const containerName = formData.get('container');
+        Homey.setViewStoreValue('add_container_device', 'containerName', containerName)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch(console.error);
+      });
+
+      $name.setAttribute('title', container.name);
+      $name.textContent = container.name;
+
+      $icon.style.webkitMaskImage = 'url(../assets/icon.svg)';
+      $icon.style.maskImage = 'url(../assets/icon.svg)';
+
+      if (index === 0) {
+        $input.checked = 'checked';
+      }
+
+      $containers.appendChild($element);
+    }
+  })();
+</script>

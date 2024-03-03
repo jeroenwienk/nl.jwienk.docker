@@ -1,0 +1,53 @@
+<div style="display: flex; flex-direction: column; height: 100%">
+  <section style="padding-bottom: var(--homey-su-1)">
+    <h3 style="font-size: 2em; font-weight: 500; margin: var(--homey-su-2) 0">Remote Access</h3>
+
+    <p style="margin: var(--homey-su-1) 0">
+      Enabling remote access to Docker requires understanding the potential implications and the
+      necessary configuration steps. For detailed instructions on how to enable remote access,
+      please refer to the comprehensive guide available via the button below.
+    </p>
+
+    <button type="button" id="remote-access" style="width: 100%">
+      Learn How to Enable Remote Access to Docker
+    </button>
+  </section>
+
+  <section style="padding-bottom: var(--homey-su-1)">
+    <h3 style="font-size: 2em; font-weight: 500; margin: var(--homey-su-2) 0">Security</h3>
+
+    <p style="margin: var(--homey-su-1) 0">
+      After enabling remote access, securing the Docker daemon is crucial to protect your Docker
+      environment from unauthorized access. The following guide outlines strategies and best
+      practices for securing your Docker daemon. It's only possible to use TLS (HTTPS) to connect to
+      the Docker daemon.
+    </p>
+
+    <p style="margin: var(--homey-su-1) 0">
+      It is possible to pair unsecured, but it is not recommended. Since the daemon would be
+      accessible on the local network it's possible for remote non-root users to gain root access on
+      the host.
+    </p>
+
+    <button type="button" id="protect-access" style="width: 100%">
+      How to Protect Access to Your Docker Daemon
+    </button>
+  </section>
+</div>
+
+<script type="application/javascript">
+  (function run() {
+    Homey.setTitle('Socket');
+    Homey.setSubtitle('Add a new socket device.');
+
+    const remoteAccessButton = document.getElementById('remote-access');
+    remoteAccessButton.addEventListener('click', () => {
+      Homey.popup('https://docs.docker.com/config/daemon/remote-access/');
+    });
+
+    const protectAccessButton = document.getElementById('protect-access');
+    protectAccessButton.addEventListener('click', () => {
+      Homey.popup('https://docs.docker.com/engine/security/protect-access/');
+    });
+  })();
+</script>

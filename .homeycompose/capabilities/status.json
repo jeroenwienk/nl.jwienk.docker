@@ -1,0 +1,9 @@
+{
+  "type": "string",
+  "title": {
+    "en": "Status"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false
+}
