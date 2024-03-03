@@ -14,6 +14,13 @@ class Device extends Homey.Device {
       cert: store.cert,
       key: store.key,
     });
+
+    this.docker
+      .info()
+      .then((info) => {
+        this.log(info);
+      })
+      .catch(this.error);
   }
 }
 

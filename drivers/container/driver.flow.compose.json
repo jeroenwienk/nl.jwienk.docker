@@ -76,6 +76,45 @@
           }
         }
       ]
+    },
+    {
+      "id": "container_stats",
+      "title": {
+        "en": "Get container stats"
+      },
+      "titleFormatted": {
+        "en": "Get container stats"
+      },
+      "tokens": [
+        {
+          "name": "response",
+          "type": "string",
+          "title": {
+            "en": "Response"
+          }
+        }
+      ]
+    },
+    {
+      "id": "container_top",
+      "title": {
+        "en": "List container processes"
+      },
+      "titleFormatted": {
+        "en": "List container processes"
+      },
+      "hint": {
+        "en": "On Unix systems, this is done by running the ps command. This endpoint is not supported on Windows."
+      },
+      "tokens": [
+        {
+          "name": "response",
+          "type": "string",
+          "title": {
+            "en": "Response"
+          }
+        }
+      ]
     }
   ]
 }

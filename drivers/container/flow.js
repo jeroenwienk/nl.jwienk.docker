@@ -44,6 +44,34 @@ class Flow {
         response: JSON.stringify(result),
       };
     });
+
+    this.homey.flow.getActionCard('container_stats').registerRunListener(async (args, state) => {
+      const result = await args.device.container.stats({ stream: false });
+
+      if (state.manual === true) {
+        return {
+          response: JSON.stringify(result, null, 2),
+        };
+      }
+
+      return {
+        response: JSON.stringify(result),
+      };
+    });
+
+    this.homey.flow.getActionCard('container_top').registerRunListener(async (args, state) => {
+      const result = await args.device.container.top();
+
+      if (state.manual === true) {
+        return {
+          response: JSON.stringify(result, null, 2),
+        };
+      }
+
+      return {
+        response: JSON.stringify(result),
+      };
+    });
   }
 }
 
