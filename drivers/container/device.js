@@ -1,7 +1,7 @@
 'use strict';
 
 const Homey = require('homey');
-// const { Writable } = require('node:stream');
+const { Writable } = require('node:stream');
 
 const eventBlacklist = new Set([
   'exec_create',
@@ -21,13 +21,14 @@ class Device extends Homey.Device {
     const data = this.getData();
     const driver = this.homey.drivers.getDriver('socket');
     await driver.ready();
+    /** @type {import('../socket/device')} */
     let socket = null;
 
     try {
       socket = driver.getDeviceById(data.socketId);
     } catch (error) {
       this.error(error);
-      throw new Error('Socket not found.');
+      throw new Error('Socket Not Found');
     }
 
     await socket.ready();
@@ -70,8 +71,6 @@ class Device extends Homey.Device {
     stream.on('end', () => {
       this.homey.emit('__log', 'stream end');
     });
-
-    // end the stream
 
     this.registerCapabilityListener('button.start', async (value, opts) => {
       this.log(value);
@@ -127,43 +126,43 @@ class Device extends Homey.Device {
       await this.container.kill();
     });
 
-    // var options = {
-    //   Cmd: ['bash', '-c', 'echo test $VAR'],
-    //   Env: ['VAR=ttslkfjsdalkfj'],
-    //   AttachStdout: true,
-    //   AttachStderr: true,
-    // };
+    var options = {
+      Cmd: ['bash', '-c', 'echo test $VAR'],
+      Env: ['VAR=ttslkfjsdalkfj'],
+      AttachStdout: true,
+      AttachStderr: true,
+    };
 
-    // const stdout = new Writable({
-    //   write: (chunk, encoding, next) => {
-    //     this.homey.emit('__log', chunk.toString());
-    //     next();
-    //   },
-    // });
+    const stdout = new Writable({
+      write: (chunk, encoding, next) => {
+        this.homey.emit('__log', chunk.toString());
+        next();
+      },
+    });
 
-    // const stderr = new Writable({
-    //   write: (chunk, encoding, next) => {
-    //     this.homey.emit('__error', chunk.toString());
-    //     next();
-    //   },
-    // });
+    const stderr = new Writable({
+      write: (chunk, encoding, next) => {
+        this.homey.emit('__error', chunk.toString());
+        next();
+      },
+    });
 
-    // (async () => {
-    //   const exec = await container.exec(options);
-    //   const stream = await exec.start();
-    //   container.modem.demuxStream(stream, stdout, stderr);
+    (async () => {
+      const exec = await this.container.exec(options);
+      const stream = await exec.start();
+      this.container.modem.demuxStream(stream, stdout, stderr);
 
-    //   stream.on('error', (err) => {
-    //     this.homey.emit('__error', 'stream error', err);
-    //   });
+      stream.on('error', (err) => {
+        this.homey.emit('__error', 'stream error', err);
+      });
 
-    //   stream.on('end', () => {
-    //     this.homey.emit('__log', 'stream end');
-    //   });
+      stream.on('end', () => {
+        this.homey.emit('__log', 'stream end');
+      });
 
-    //   const data = await exec.inspect();
-    //   this.log(data);
-    // })().catch(this.error);
+      const data = await exec.inspect();
+      this.log(data);
+    })().catch(this.error);
   }
 
   onDeleted() {
