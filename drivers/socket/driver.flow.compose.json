@@ -1,0 +1,164 @@
+{
+  "actions": [
+    {
+      "id": "socket_info",
+      "title": {
+        "en": "Get system information"
+      },
+      "titleFormatted": {
+        "en": "Get system information"
+      },
+      "tokens": [
+        {
+          "name": "response",
+          "type": "string",
+          "title": {
+            "en": "Response"
+          }
+        }
+      ]
+    },
+    {
+      "id": "socket_version",
+      "title": {
+        "en": "Get version"
+      },
+      "titleFormatted": {
+        "en": "Get version"
+      },
+      "hint": {
+        "en": "Returns the version of Docker that is running and various information about the system that Docker is running on."
+      },
+      "tokens": [
+        {
+          "name": "response",
+          "type": "string",
+          "title": {
+            "en": "Response"
+          }
+        }
+      ]
+    },
+    {
+      "id": "socket_containers_list",
+      "title": {
+        "en": "List containers"
+      },
+      "titleFormatted": {
+        "en": "List containers"
+      },
+      "tokens": [
+        {
+          "name": "response",
+          "type": "string",
+          "title": {
+            "en": "Response"
+          }
+        }
+      ]
+    },
+    {
+      "id": "socket_containers_list_running",
+      "title": {
+        "en": "List running containers"
+      },
+      "titleFormatted": {
+        "en": "List running containers"
+      },
+      "tokens": [
+        {
+          "name": "response",
+          "type": "string",
+          "title": {
+            "en": "Response"
+          }
+        }
+      ]
+    },
+    {
+      "id": "socket_images_list",
+      "title": {
+        "en": "List images"
+      },
+      "titleFormatted": {
+        "en": "List images"
+      },
+      "tokens": [
+        {
+          "name": "response",
+          "type": "string",
+          "title": {
+            "en": "Response"
+          }
+        }
+      ]
+    },
+    {
+      "id": "socket_container_create",
+      "title": {
+        "en": "Create container"
+      },
+      "titleFormatted": {
+        "en": "Create container with [[name]] and options [[options]]"
+      },
+      "args": [
+        {
+          "name": "name",
+          "type": "text",
+          "title": {
+            "en": "Name"
+          }
+        },
+        {
+          "name": "options",
+          "type": "text",
+          "title": {
+            "en": "Options"
+          },
+          "hint": {
+            "en": "https://docs.docker.com/reference/api/engine/version/v1.37/#tag/Container/operation/ContainerCreate"
+          }
+        }
+      ],
+      "tokens": [
+        {
+          "name": "response",
+          "type": "string",
+          "title": {
+            "en": "Response"
+          }
+        }
+      ]
+    },
+    {
+      "id": "socket_image_create",
+      "title": {
+        "en": "Create image"
+      },
+      "titleFormatted": {
+        "en": "Create image with options [[options]]"
+      },
+      "args": [
+        {
+          "name": "options",
+          "type": "text",
+          "title": {
+            "en": "Options"
+          },
+          "hint": {
+            "en": "https://docs.docker.com/reference/api/engine/version/v1.37/#tag/Image/operation/ImageCreate"
+          }
+        }
+      ],
+      "tokens": [
+        {
+          "name": "response",
+          "type": "string",
+          "title": {
+            "en": "Response"
+          }
+        }
+      ]
+    }
+  ]
+}

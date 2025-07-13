@@ -4,8 +4,12 @@ const Homey = require('homey');
 const Docker = require('dockerode');
 const { v4: uuidv4 } = require('uuid');
 
+const Flow = require('./flow');
+
 class Driver extends Homey.Driver {
-  async onInit() {}
+  async onInit() {
+    this.flow = new Flow({ homey: this.homey, driver: this });
+  }
 
   async onPair(session) {
     session.setHandler('test_connection', async (data) => {

@@ -1,8 +1,9 @@
 'use strict';
 
 const Homey = require('homey');
-const Flow = require('./flow');
 const { v4: uuidv4 } = require('uuid');
+
+const Flow = require('./flow');
 
 class Driver extends Homey.Driver {
   async onInit() {

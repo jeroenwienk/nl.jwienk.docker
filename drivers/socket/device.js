@@ -7,6 +7,7 @@ class Device extends Homey.Device {
   async onInit() {
     const store = this.getStore();
 
+    /** @type {Docker} */
     this.docker = new Docker({
       host: store.host,
       port: store.port,
@@ -18,7 +19,7 @@ class Device extends Homey.Device {
     this.docker
       .info()
       .then((info) => {
-        this.log(info);
+        // this.log(info);
       })
       .catch(this.error);
   }
