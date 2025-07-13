@@ -151,6 +151,54 @@ class Flow {
       }
     );
 
+    this.homey.flow.getActionCard('socket_container_start').registerRunListener(
+      /**
+       * @param {object} args
+       * @param {import('./device')} args.device
+       * @param {object} state
+       * @param {boolean} [state.manual]
+       * @returns {Promise<{ response: string }>}
+       */
+      async (args, state) => {
+        const container = args.device.docker.getContainer(args.name);
+        const result = await container.start();
+
+        if (state.manual === true) {
+          return {
+            response: JSON.stringify(result, null, 2),
+          };
+        }
+
+        return {
+          response: JSON.stringify(result),
+        };
+      }
+    );
+
+    this.homey.flow.getActionCard('socket_container_stop').registerRunListener(
+      /**
+       * @param {object} args
+       * @param {import('./device')} args.device
+       * @param {object} state
+       * @param {boolean} [state.manual]
+       * @returns {Promise<{ response: string }>}
+       */
+      async (args, state) => {
+        const container = args.device.docker.getContainer(args.name);
+        const result = await container.stop({ t: args.t });
+
+        if (state.manual === true) {
+          return {
+            response: JSON.stringify(result, null, 2),
+          };
+        }
+
+        return {
+          response: JSON.stringify(result),
+        };
+      }
+    );
+
     this.homey.flow.getActionCard('socket_image_create').registerRunListener(
       /**
        * @param {object} args

@@ -131,6 +131,60 @@
       ]
     },
     {
+      "id": "socket_container_start",
+      "title": {
+        "en": "Start container"
+      },
+      "titleFormatted": {
+        "en": "Start container with [[name]]"
+      },
+      "args": [
+        {
+          "name": "name",
+          "type": "text",
+          "title": {
+            "en": "Name"
+          }
+        }
+      ],
+      "tokens": [
+        {
+          "name": "response",
+          "type": "string",
+          "title": {
+            "en": "Response"
+          }
+        }
+      ]
+    },
+    {
+      "id": "socket_container_stop",
+      "title": {
+        "en": "Stop container"
+      },
+      "titleFormatted": {
+        "en": "Stop container with [[name]]"
+      },
+      "args": [
+        {
+          "name": "name",
+          "type": "text",
+          "title": {
+            "en": "Name"
+          }
+        }
+      ],
+      "tokens": [
+        {
+          "name": "response",
+          "type": "string",
+          "title": {
+            "en": "Response"
+          }
+        }
+      ]
+    },
+    {
       "id": "socket_image_create",
       "title": {
         "en": "Create image"
