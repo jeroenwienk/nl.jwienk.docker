@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "nl.jwienk.docker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#1D63ED",
@@ -12,7 +12,7 @@
     "en": "Docker"
   },
   "description": {
-    "en": "Adds support for MyBrand devices."
+    "en": "Automate Docker with Homey."
   },
   "category": [
     "tools"
