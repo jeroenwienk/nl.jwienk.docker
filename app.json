@@ -305,7 +305,7 @@
           "en": "Create container"
         },
         "titleFormatted": {
-          "en": "Create container with [[name]] and options [[options]]"
+          "en": "Create container with name [[name]] and options [[options]]"
         },
         "args": [
           {
@@ -342,12 +342,15 @@
         ]
       },
       {
-        "id": "socket_container_start",
+        "id": "socket_container_action",
         "title": {
-          "en": "Start container"
+          "en": "Run action with options on container with name"
         },
         "titleFormatted": {
-          "en": "Start container with [[name]]"
+          "en": "Run [[action]] with [[options]] on container with name [[name]]"
+        },
+        "hint": {
+          "en": "For options see https://docs.docker.com/reference/api/engine/version/v1.37/#tag/Container"
         },
         "args": [
           {
@@ -361,38 +364,114 @@
             "title": {
               "en": "Name"
             }
-          }
-        ],
-        "tokens": [
-          {
-            "name": "response",
-            "type": "string",
-            "title": {
-              "en": "Response"
-            }
-          }
-        ]
-      },
-      {
-        "id": "socket_container_stop",
-        "title": {
-          "en": "Stop container"
-        },
-        "titleFormatted": {
-          "en": "Stop container with [[name]]"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=socket"
           },
           {
-            "name": "name",
+            "name": "options",
             "type": "text",
             "title": {
-              "en": "Name"
-            }
+              "en": "Options"
+            },
+            "value": "{}",
+            "required": false
+          },
+          {
+            "type": "dropdown",
+            "name": "action",
+            "title": {
+              "en": "Action"
+            },
+            "values": [
+              {
+                "id": "inspect",
+                "label": {
+                  "en": "Inspect"
+                }
+              },
+              {
+                "id": "start",
+                "label": {
+                  "en": "Start"
+                }
+              },
+              {
+                "id": "stop",
+                "label": {
+                  "en": "Stop"
+                }
+              },
+              {
+                "id": "restart",
+                "label": {
+                  "en": "Restart"
+                }
+              },
+              {
+                "id": "kill",
+                "label": {
+                  "en": "Kill"
+                }
+              },
+              {
+                "id": "pause",
+                "label": {
+                  "en": "Pause"
+                }
+              },
+              {
+                "id": "unpause",
+                "label": {
+                  "en": "Unpause"
+                }
+              },
+              {
+                "id": "rename",
+                "label": {
+                  "en": "Rename"
+                }
+              },
+              {
+                "id": "update",
+                "label": {
+                  "en": "Update"
+                }
+              },
+              {
+                "id": "top",
+                "label": {
+                  "en": "Top"
+                }
+              },
+              {
+                "id": "changes",
+                "label": {
+                  "en": "Changes"
+                }
+              },
+              {
+                "id": "wait",
+                "label": {
+                  "en": "Wait"
+                }
+              },
+              {
+                "id": "remove",
+                "label": {
+                  "en": "Remove"
+                }
+              },
+              {
+                "id": "logs",
+                "label": {
+                  "en": "Logs"
+                }
+              },
+              {
+                "id": "stats",
+                "label": {
+                  "en": "Stats"
+                }
+              }
+            ]
           }
         ],
         "tokens": [

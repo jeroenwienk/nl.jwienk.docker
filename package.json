@@ -4,12 +4,12 @@
   "main": "app.js",
   "scripts": {},
   "devDependencies": {
-    "@types/dockerode": "^3.3.42",
+    "@types/dockerode": "^3.3.45",
     "@types/homey": "npm:homey-apps-sdk-v3-types@^0.3.12",
-    "@types/node": "^20.19.7"
+    "@types/node": "^22.13.14"
   },
   "dependencies": {
-    "dockerode": "^4.0.7",
-    "uuid": "^11.1.0"
+    "dockerode": "^4.0.9",
+    "uuid": "^13.0.0"
   }
 }
