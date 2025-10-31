@@ -1,21 +1,17 @@
 {
   "id": "nl.jwienk.docker",
   "version": "1.0.1",
-  "compatibility": ">=5.0.0",
+  "compatibility": ">=12.8.1",
   "sdk": 3,
   "brandColor": "#1D63ED",
-  "platforms": [
-    "local"
-  ],
+  "platforms": ["local"],
   "name": {
     "en": "Docker"
   },
   "description": {
     "en": "Automate Docker with Homey."
   },
-  "category": [
-    "tools"
-  ],
+  "category": ["tools"],
   "permissions": [],
   "images": {
     "small": "/assets/images/small.png",
@@ -25,5 +21,11 @@
   "author": {
     "name": "Jeroen Wienk",
     "email": "jeroenwienk@gmail.com"
+  },
+  "source": "https://github.com/jeroenwienk/nl.jwienk.docker",
+  "support": "https://github.com/jeroenwienk/nl.jwienk.docker/issues",
+  "homepage": "https://www.docker.com/",
+  "bugs": {
+    "url": "https://github.com/jeroenwienk/nl.jwienk.docker/issues"
   }
 }
